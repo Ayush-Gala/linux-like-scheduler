@@ -1,0 +1,35 @@
+Answer 1:
+
+1. Exponential Distribution Scheduler
+>>> Advantages:
+* The EXPDIST scheduler is relatively easy to implement as compared to the Linux-like scheduler. There aren't a lot of constraints to satisfy and scheduling is quick.
+* We can easily track the percentage of run time alloted to each process in order to catch rogue processes or find altercations in the system.
+>>> Disadvantages:
+* While the fairness of the scheduler is better than that of the XINU default scheduler, it cannot deterministically guarantee that every process will be treated fairly and will get to execute.
+
+2. Linux-Like Scheduler
+>>> Advantages:
+* Unlike the EXPDIST scheduler, the Linux-like scheduler can guarantee that all the processes in the ready queue will get a chance to run in a given epoch.
+* Even if the process yields the CPU, it can be scheduled again to run in the same epoch.
+* As goodness value depends on the process priority, high priority process are scheduled first without excessive starvation of the lower priority processes.
+>>> Disadvantages:
+* It is fairly complex to implement the Linux-like scheduler as compared to the other schedulers in this assignment. There are a lot of variables to keep track which play an important role in the decision making of the scheduler.
+* The average turn-around-time for low priority processes is lower as compared to the EXPDIST scheduler.
+* I think a rogue process can repetitively yield the CPU to hoard ticks for upcoming epochs as there is no upper cap on the number of time-slices a process can hoard.
+
+3. XINU Default Scheduler
+>>> Advantages:
+* The XINU default scheduler is the easiest scheduler to implement. It requires the lest compute resources to schedule a process and relies on the insert function to correctly order the ready queue to find the highest priority process to schedule.
+
+>>> Disadvantages:
+* Since it directly chooses the highest priority process to schedule, a stream of hihg priority processes could easily starve lower priority processes for CPU and other resources.
+
+Answer 2:
+1. Exponential Distribution Scheduler
+> The NULL process is scheduled when there are no other processes in ready queue.
+
+2. Linux-Like Scheduler
+> When all processes in the ready queue complete their allocated quantum in an epoch, or if there are no other processes to schedule in the ready queue, the NULL process is scheduled.
+
+3. XINU Default Scheduler
+> The NULL process will be scheduled when there are no other processes in the ready queue.
